@@ -1,0 +1,4 @@
+*.swp
+template-operator
+TODO
+!vendor/**
