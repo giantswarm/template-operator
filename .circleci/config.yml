@@ -2,16 +2,47 @@ orbs:
   architect: giantswarm/architect@0.4.3
 
 version: 2.1
+jobs:
+  build:
+    machine: true
+    steps:
+    - checkout
 
+    - run: |
+        wget -q $(curl -sS  https://api.github.com/repos/giantswarm/architect/releases/latest | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
+        chmod +x ./architect
+        ./architect version
+
+    - run: |
+        date +"%Y" > /tmp/year
+        date +"%m" > /tmp/month
+        date +"%d" > /tmp/day
+    - restore_cache:
+        keys:
+        - go-cache-v1-{{ checksum "/tmp/year" }}-{{ checksum "/tmp/month" }}-{{ checksum "/tmp/day" }}
+        - go-cache-v1-{{ checksum "/tmp/year" }}-{{ checksum "/tmp/month" }}
+        - go-cache-v1-{{ checksum "/tmp/year" }}
+
+    - run: ./architect build
+
+    - store_test_results:
+        path: /tmp/results
+
+    - persist_to_workspace:
+        root: .
+        paths:
+        - ./template-operator
+
+    - save_cache:
+        key: go-cache-v1-{{ checksum "/tmp/year" }}-{{ checksum "/tmp/month" }}-{{ checksum "/tmp/day" }}
+        paths:
+        - /tmp/go/cache
 
 workflows:
   build:
     jobs:
-      - architect/go-build:
-          name: go-build-template-operator
-          binary: template-operator
+      - build:
           filters:
-            # Needed to trigger job also on git tag.
             tags:
               only: /^v.*/
 
@@ -21,7 +52,7 @@ workflows:
           username_envar: "QUAY_USERNAME"
           password_envar: "QUAY_PASSWORD"
           requires:
-            - go-build-template-operator
+            - build
           # Needed to trigger job also on git tag.
           filters:
             tags:
