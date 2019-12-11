@@ -33,3 +33,22 @@ jobs:
         paths:
         - /tmp/go/cache
 
+workflows:
+  build:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v.*/
+
+      - architect/push-to-docker:
+          name: push-template-operator-to-quay
+          image: "quay.io/giantswarm/template-operator"
+          username_envar: "QUAY_USERNAME"
+          password_envar: "QUAY_PASSWORD"
+          requires:
+            - build
+          # Needed to trigger job also on git tag.
+          filters:
+            tags:
+              only: /^v.*/
