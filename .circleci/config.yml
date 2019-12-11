@@ -2,17 +2,16 @@ orbs:
   architect: giantswarm/architect@0.4.3
 
 version: 2.1
-jobs:
-  - architect/go-build:
-      name: go-build-template-operator
-      binary: template-operator
 
 
 workflows:
   build:
     jobs:
-      - build:
+      - architect/go-build:
+          name: go-build-template-operator
+          binary: template-operator
           filters:
+            # Needed to trigger job also on git tag.
             tags:
               only: /^v.*/
 
