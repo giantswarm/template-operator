@@ -6,14 +6,13 @@ import (
 	"context"
 	"sync"
 
-	"github.com/giantswarm/apiextensions/pkg/clientset/versioned"
+	"github.com/giantswarm/k8sclient"
+	"github.com/giantswarm/k8sclient/k8srestconfig"
 	"github.com/giantswarm/microendpoint/service/version"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
-	"github.com/giantswarm/operatorkit/client/k8srestconfig"
 	"github.com/giantswarm/versionbundle"
 	"github.com/spf13/viper"
-	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 
 	"github.com/giantswarm/template-operator/flag"
@@ -76,21 +75,24 @@ func New(config Config) (*Service, error) {
 		}
 	}
 
-	g8sClient, err := versioned.NewForConfig(restConfig)
-	if err != nil {
-		return nil, microerror.Mask(err)
-	}
+	var k8sClient k8sclient.Interface
+	{
+		c := k8sclient.ClientsConfig{
+			Logger: config.Logger,
 
-	k8sClient, err := kubernetes.NewForConfig(restConfig)
-	if err != nil {
-		return nil, microerror.Mask(err)
+			RestConfig: restConfig,
+		}
+
+		k8sClient, err = k8sclient.NewClients(c)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
 	}
 
 	var todoController *controller.TODO
 	{
 
 		c := controller.TODOConfig{
-			G8sClient: g8sClient,
 			K8sClient: k8sClient,
 			Logger:    config.Logger,
 		}
@@ -104,7 +106,7 @@ func New(config Config) (*Service, error) {
 	var operatorCollector *collector.Set
 	{
 		c := collector.SetConfig{
-			K8sClient: k8sClient,
+			K8sClient: k8sClient.K8sClient(),
 			Logger:    config.Logger,
 		}
 

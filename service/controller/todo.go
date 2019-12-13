@@ -1,20 +1,18 @@
 package controller
 
 import (
-	"github.com/giantswarm/apiextensions/pkg/clientset/versioned"
+	"github.com/giantswarm/k8sclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
 	"github.com/giantswarm/operatorkit/controller"
-	"github.com/giantswarm/operatorkit/informer"
 	corev1 "k8s.io/api/core/v1"
-	"k8s.io/client-go/kubernetes"
+	"k8s.io/apimachinery/pkg/runtime"
 
-	"github.com/giantswarm/aws-operator/pkg/project"
+	"github.com/giantswarm/template-operator/pkg/project"
 )
 
 type TODOConfig struct {
-	G8sClient versioned.Interface
-	K8sClient kubernetes.Interface
+	K8sClient k8sclient.Interface
 	Logger    micrologger.Logger
 }
 
@@ -25,22 +23,6 @@ type TODO struct {
 func NewTODO(config TODOConfig) (*TODO, error) {
 	var err error
 
-	var newInformer *informer.Informer
-	{
-		c := informer.Config{
-			Logger:  config.Logger,
-			Watcher: config.K8sClient.CoreV1().Pods(corev1.NamespaceAll),
-
-			RateWait:     informer.DefaultRateWait,
-			ResyncPeriod: informer.DefaultResyncPeriod,
-		}
-
-		newInformer, err = informer.New(c)
-		if err != nil {
-			return nil, microerror.Mask(err)
-		}
-	}
-
 	resourceSets, err := newTODOResourceSets(config)
 	if err != nil {
 		return nil, microerror.Mask(err)
@@ -49,9 +31,11 @@ func NewTODO(config TODOConfig) (*TODO, error) {
 	var operatorkitController *controller.Controller
 	{
 		c := controller.Config{
-			Informer:     newInformer,
 			Logger:       config.Logger,
 			ResourceSets: resourceSets,
+			NewRuntimeObjectFunc: func() runtime.Object {
+				return new(corev1.Pod)
+			},
 
 			// Name is used to compute finalizer names. This here results in something
 			// like operatorkit.giantswarm.io/template-operator-todo-controller.
@@ -77,7 +61,6 @@ func newTODOResourceSets(config TODOConfig) ([]*controller.ResourceSet, error) {
 	var resourceSet *controller.ResourceSet
 	{
 		c := todoResourceSetConfig{
-			G8sClient: config.G8sClient,
 			K8sClient: config.K8sClient,
 			Logger:    config.Logger,
 		}
