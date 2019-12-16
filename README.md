@@ -10,5 +10,6 @@ link][generate].
 
 After creating your repository replace all instances of
 `template-operator` in this code base with your new repository name.
+Also rename `helm/template-operator` directory.
 
 [generate]: https://github.com/giantswarm/template-operator/generate
