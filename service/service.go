@@ -39,12 +39,18 @@ type Service struct {
 
 // New creates a new configured service object.
 func New(config Config) (*Service, error) {
+	var serviceAddress string
 	// Settings.
 	if config.Flag == nil {
 		return nil, microerror.Maskf(invalidConfigError, "config.Flag must not be empty")
 	}
 	if config.Viper == nil {
 		return nil, microerror.Maskf(invalidConfigError, "config.Viper must not be empty")
+	}
+	if config.Flag.Service.Kubernetes.KubeConfig == "" {
+		serviceAddress = config.Viper.GetString(config.Flag.Service.Kubernetes.Address)
+	} else {
+		serviceAddress = ""
 	}
 
 	// Dependencies.
@@ -59,7 +65,7 @@ func New(config Config) (*Service, error) {
 		c := k8srestconfig.Config{
 			Logger: config.Logger,
 
-			Address:    config.Viper.GetString(config.Flag.Service.Kubernetes.Address),
+			Address:    serviceAddress,
 			InCluster:  config.Viper.GetBool(config.Flag.Service.Kubernetes.InCluster),
 			KubeConfig: config.Viper.GetString(config.Flag.Service.Kubernetes.KubeConfig),
 			TLS: k8srestconfig.ConfigTLS{
