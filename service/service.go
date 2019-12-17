@@ -79,7 +79,10 @@ func New(config Config) (*Service, error) {
 	{
 		c := k8sclient.ClientsConfig{
 			Logger: config.Logger,
-
+			// TODO: If you are watching a new CRD, include here the AddToScheme function from apiextensions.
+			// SchemeBuilder: k8sclient.SchemeBuilder{
+			//     corev1alpha1.AddToScheme,
+			// },
 			RestConfig: restConfig,
 		}
 
