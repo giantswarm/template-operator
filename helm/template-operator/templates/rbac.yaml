@@ -2,6 +2,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ include "resource.default.name"  . }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
 rules:
   - apiGroups:
       - ""
@@ -54,6 +56,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ include "resource.default.name"  . }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "resource.default.name"  . }}
@@ -67,6 +71,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: {{ include "resource.psp.name" . }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
 rules:
   - apiGroups:
       - extensions
@@ -81,6 +87,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{ include "resource.psp.name" . }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "resource.default.name"  . }}
