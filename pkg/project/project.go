@@ -6,7 +6,7 @@ var (
 	gitSHA        = "n/a"
 	name          = "template-operator"
 	source        = "https://github.com/giantswarm/template-operator"
-	version       = "n/a"
+	version       = "1.0.0-dev"
 )
 
 func BundleVersion() string {
