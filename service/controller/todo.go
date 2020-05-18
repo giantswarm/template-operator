@@ -3,14 +3,18 @@ package controller
 import (
 	// If your operator watches a CRD import it here.
 	// "github.com/giantswarm/apiextensions/pkg/apis/application/v1alpha1"
-	"github.com/giantswarm/k8sclient"
+	"github.com/giantswarm/k8sclient/v3/pkg/k8sclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
 	"github.com/giantswarm/operatorkit/controller"
+	"github.com/giantswarm/operatorkit/resource"
+	"github.com/giantswarm/operatorkit/resource/wrapper/metricsresource"
+	"github.com/giantswarm/operatorkit/resource/wrapper/retryresource"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 
 	"github.com/giantswarm/template-operator/pkg/project"
+	"github.com/giantswarm/template-operator/service/controller/resource/test"
 )
 
 type TODOConfig struct {
@@ -25,7 +29,7 @@ type TODO struct {
 func NewTODO(config TODOConfig) (*TODO, error) {
 	var err error
 
-	resourceSets, err := newTODOResourceSets(config)
+	resources, err := newTODOResources(config)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
@@ -33,14 +37,12 @@ func NewTODO(config TODOConfig) (*TODO, error) {
 	var operatorkitController *controller.Controller
 	{
 		c := controller.Config{
-			// If your operator watches a CRD add it here.
-			// CRD:       v1alpha1.NewAppCRD(),
-			K8sClient:    config.K8sClient,
-			Logger:       config.Logger,
-			ResourceSets: resourceSets,
+			K8sClient: config.K8sClient,
+			Logger:    config.Logger,
 			NewRuntimeObjectFunc: func() runtime.Object {
 				return new(corev1.Pod)
 			},
+			Resources: resources,
 
 			// Name is used to compute finalizer names. This here results in something
 			// like operatorkit.giantswarm.io/template-operator-todo-controller.
@@ -60,25 +62,45 @@ func NewTODO(config TODOConfig) (*TODO, error) {
 	return c, nil
 }
 
-func newTODOResourceSets(config TODOConfig) ([]*controller.ResourceSet, error) {
+func newTODOResources(config TODOConfig) ([]resource.Interface, error) {
 	var err error
 
-	var resourceSet *controller.ResourceSet
+	var testResource resource.Interface
 	{
-		c := todoResourceSetConfig{
+		c := test.Config{
 			K8sClient: config.K8sClient,
 			Logger:    config.Logger,
 		}
 
-		resourceSet, err = newTODOResourceSet(c)
+		testResource, err = test.New(c)
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
 	}
 
-	resourceSets := []*controller.ResourceSet{
-		resourceSet,
+	resources := []resource.Interface{
+		testResource,
 	}
 
-	return resourceSets, nil
+	{
+		c := retryresource.WrapConfig{
+			Logger: config.Logger,
+		}
+
+		resources, err = retryresource.Wrap(resources, c)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+	}
+
+	{
+		c := metricsresource.WrapConfig{}
+
+		resources, err = metricsresource.Wrap(resources, c)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+	}
+
+	return resources, nil
 }

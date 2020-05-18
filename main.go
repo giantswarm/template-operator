@@ -7,7 +7,6 @@ import (
 	"github.com/giantswarm/microkit/command"
 	microserver "github.com/giantswarm/microkit/server"
 	"github.com/giantswarm/micrologger"
-	"github.com/giantswarm/versionbundle"
 	"github.com/spf13/viper"
 
 	"github.com/giantswarm/template-operator/flag"
@@ -87,12 +86,11 @@ func mainE(ctx context.Context) error {
 			Logger:        logger,
 			ServerFactory: serverFactory,
 
-			Description:    project.Description(),
-			GitCommit:      project.GitSHA(),
-			Name:           project.Name(),
-			Source:         project.Source(),
-			Version:        project.Version(),
-			VersionBundles: []versionbundle.Bundle{project.NewVersionBundle()},
+			Description: project.Description(),
+			GitCommit:   project.GitSHA(),
+			Name:        project.Name(),
+			Source:      project.Source(),
+			Version:     project.Version(),
 		}
 
 		newCommand, err = command.New(c)
@@ -110,7 +108,10 @@ func mainE(ctx context.Context) error {
 	daemonCommand.PersistentFlags().String(f.Service.Kubernetes.TLS.CrtFile, "", "Certificate file path to use to authenticate with Kubernetes.")
 	daemonCommand.PersistentFlags().String(f.Service.Kubernetes.TLS.KeyFile, "", "Key file path to use to authenticate with Kubernetes.")
 
-	newCommand.CobraCommand().Execute()
+	err = newCommand.CobraCommand().Execute()
+	if err != nil {
+		return microerror.Mask(err)
+	}
 
 	return nil
 }
