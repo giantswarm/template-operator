@@ -6,7 +6,9 @@ orbs:
 workflows:
   build:
     jobs:
-      - build:
+      - architect/go-build:
+          name: go-build
+          binary: template-operator
           filters:
             tags:
               only: /^v.*/
