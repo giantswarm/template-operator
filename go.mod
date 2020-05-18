@@ -1,22 +1,20 @@
 module github.com/giantswarm/template-operator
 
-go 1.13
+go 1.14
 
 require (
-	github.com/giantswarm/apiextensions v0.0.0-20200220082851-d6884ee11480 // indirect
-	github.com/giantswarm/backoff v0.0.0-20200209120535-b7cb1852522d // indirect
-	github.com/giantswarm/exporterkit v0.0.0-20190619131829-9749deade60f
-	github.com/giantswarm/k8sclient v0.0.0-20191209120459-6cb127468cd6
-	github.com/giantswarm/microendpoint v0.0.0-20200205204116-c2c5b3af4bdb
-	github.com/giantswarm/microerror v0.1.1-0.20200205143715-01b76f66cae6
-	github.com/giantswarm/microkit v0.0.0-20191023091504-429e22e73d3e
-	github.com/giantswarm/micrologger v0.0.0-20200205144836-079154bcae45
-	github.com/giantswarm/operatorkit v0.0.0-20200205163802-6b6e6b2c208b
-	github.com/giantswarm/versionbundle v0.0.0-20200205145509-6772c2bc7b34
+	github.com/giantswarm/exporterkit v0.2.0
+	github.com/giantswarm/k8sclient/v3 v3.1.0
+	github.com/giantswarm/microendpoint v0.2.0
+	github.com/giantswarm/microerror v0.2.0
+	github.com/giantswarm/microkit v0.2.1
+	github.com/giantswarm/micrologger v0.3.1
+	github.com/giantswarm/operatorkit v1.0.0
+	github.com/giantswarm/versionbundle v0.2.0
 	github.com/gorilla/mux v1.7.4 // indirect
-	github.com/prometheus/client_golang v1.0.0
+	github.com/prometheus/client_golang v1.3.0
 	github.com/spf13/cobra v0.0.6 // indirect
-	github.com/spf13/viper v1.6.1
+	github.com/spf13/viper v1.6.2
 	k8s.io/api v0.16.6
 	k8s.io/apimachinery v0.16.6
 	k8s.io/client-go v0.16.6
