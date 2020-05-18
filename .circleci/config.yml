@@ -14,6 +14,7 @@ workflows:
               only: /^v.*/
 
       - architect/push-to-docker:
+          context: "architect"
           name: push-template-operator-to-quay
           image: "quay.io/giantswarm/template-operator"
           username_envar: "QUAY_USERNAME"
@@ -25,42 +26,22 @@ workflows:
             tags:
               only: /^v.*/
 
-      - hold-push-template-operator-to-aliyun-pr:
-          type: approval
-          requires:
-            - go-build
-          # Needed to prevent job from being triggered on master branch.
-          filters:
-            branches:
-              ignore: master
-
       - architect/push-to-docker:
-          name: push-template-operator-to-aliyun-pr
-          image: "registry-intl.cn-shanghai.aliyuncs.com/giantswarm/template-operator"
-          username_envar: "ALIYUN_USERNAME"
-          password_envar: "ALIYUN_PASSWORD"
-          # Push to Aliyun should execute for non-master branches only once manually approved.
-          requires:
-            - hold-push-template-operator-to-aliyun-pr
-          # Needed to prevent job being triggered for master branch.
-          filters:
-            branches:
-              ignore: master
-
-      # Push to Aliyun should execute without manual approval on master.
-      - architect/push-to-docker:
-          name: push-template-operator-to-aliyun-master
+          context: "architect"
+          name: push-template-operator-to-aliyun
           image: "registry-intl.cn-shanghai.aliyuncs.com/giantswarm/template-operator"
           username_envar: "ALIYUN_USERNAME"
           password_envar: "ALIYUN_PASSWORD"
           requires:
             - go-build
-          # Needed to trigger job only on merge to master.
+          # Needed to trigger job also on git tag.
           filters:
-            branches:
-              only: master
+            tags:
+              only: /^v.*/
+
 
       - architect/push-to-app-catalog:
+          context: "architect"
           name: push-template-operator-to-app-catalog
           app_catalog: "control-plane-catalog"
           app_catalog_test: "control-plane-test-catalog"
