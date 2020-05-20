@@ -1,12 +1,15 @@
 image:
-  registry: "quay.io"
   name: "giantswarm/template-operator"
   tag: "[[ .Version ]]"
+Installation:
+  V1:
+    Registry:
+      Domain: quay.io
 pod:
   user:
     id: 1000
   group:
     id: 1000
 project:
-  name: "template-operator"
-  version: "[[ .Version ]]"
+  branch: "[[ .Branch ]]"
+  commit: "[[ .SHA ]]"
