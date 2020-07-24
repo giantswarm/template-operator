@@ -3,21 +3,18 @@
 # https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners.
 #
 # Files and directories can be owned by multiple teams, for example:
-# path/to/directory/ @giantswarm/team-x @giantswarm/team-y @giantswarm/team-z
+# /path/to/directory/ @giantswarm/team-x @giantswarm/team-y
 
 # These owners will be the default owners for everything in the repo. Unless a later match takes precedence,
 # @giantswarm/team-x and @giantswarm/team-y will be requested for review when someone opens a pull request.
+# *    @giantswarm/team-x @giantswarm/team-y
 
-# *       @giantswarm/team-x @giantswarm/team-y
+# To add SIG Security to code review with changes in SECURITY.md, uncomment the next line:
+# SECURITY.md @giantswarm/sig-security
 
-# Add SIG Security to code review with changes in SECURITY.md
-SECURITY.md @giantswarm/sig-security
-
-# Order is important; the last matching pattern takes the most
-# precedence. When someone opens a pull request that only
-# modifies golang files, only @go-owner and not the global
-# owner(s) will be requested for a review.
-# *.go    @go-owner
+# Order is important; the last matching pattern takes the most precedence. When someone opens a pull request that only
+# modifies golang files, only @giantswarm/sig-xyz and not the global owner(s) will be requested for a review.
+# *.go    @giantswarm/sig-xyz
 
 # To own any files in the "some/directory" directory at the root of the repository and any of its subdirectories:
 # /some/directory/ @giantswarm/team-z
