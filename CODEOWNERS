@@ -9,9 +9,6 @@
 # @giantswarm/team-x and @giantswarm/team-y will be requested for review when someone opens a pull request.
 # *    @giantswarm/team-x @giantswarm/team-y
 
-# To add SIG Security to code review with changes in SECURITY.md, uncomment the next line:
-# SECURITY.md @giantswarm/sig-security
-
 # Order is important; the last matching pattern takes the most precedence. When someone opens a pull request that only
 # modifies golang files, only @giantswarm/sig-xyz and not the global owner(s) will be requested for a review.
 # *.go    @giantswarm/sig-xyz
