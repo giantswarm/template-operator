@@ -11,6 +11,8 @@
     - Change the badge (with style=shield):
       https://circleci.com/gh/giantswarm/REPOSITORY_NAME/edit#badges
       If this is a private repository token with scope `status` will be needed.
+    
+    - Update CODEOWNERS file according to the needs for this project
 
     - Run `devctl replace -i "REPOSITORY_NAME" "$(basename $(git rev-parse --show-toplevel))" *.md`
       and commit your changes.
