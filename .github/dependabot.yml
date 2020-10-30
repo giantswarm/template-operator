@@ -10,6 +10,12 @@ updates:
     interval: weekly
     time: "04:00"
   target-branch: master
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "04:00"
+  target-branch: master
 - package-ecosystem: gomod
   directory: "/"
   schedule:
