@@ -15,22 +15,22 @@ type Config struct {
 	Logger    micrologger.Logger
 }
 
-type Resource struct {
+type Handler struct {
 	logger micrologger.Logger
 }
 
-func New(config Config) (*Resource, error) {
+func New(config Config) (*Handler, error) {
 	if config.Logger == nil {
 		return nil, microerror.Maskf(invalidConfigError, "%T.Logger must not be empty", config)
 	}
 
-	r := &Resource{
+	r := &Handler{
 		logger: config.Logger,
 	}
 
 	return r, nil
 }
 
-func (r *Resource) Name() string {
+func (r *Handler) Name() string {
 	return Name
 }
