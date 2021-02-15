@@ -169,6 +169,8 @@ github.com/giantswarm/cluster-api v0.3.10-gs h1:l2LpZlN97t7RRwKf4OBfNA2h1oVnZXWC
 github.com/giantswarm/cluster-api v0.3.10-gs/go.mod h1:878STePVJcBNDYFY2eCsLuHXWs6qiH3INFItEwdfWaE=
 github.com/giantswarm/exporterkit v0.2.0 h1:+HTGl4fmT/1OkTox8HbV3JXeavmsZv94+2CDW8cSrq0=
 github.com/giantswarm/exporterkit v0.2.0/go.mod h1:b4fuHVjsvZgznC9OEPfn0y5zvN8SnEKTiI5zTTfck94=
+github.com/giantswarm/exporterkit v0.2.1 h1:M/Avqdg6O+NdyGtY+LSy5cCpJzhG15WRHQRkhOY/dKs=
+github.com/giantswarm/exporterkit v0.2.1/go.mod h1:LkZNK+2qTcbHspbizA6JBBXpQW99u7u7UisUaWrSoVY=
 github.com/giantswarm/k8sclient/v5 v5.0.0 h1:+Qs75jAphCC6ddlpjyGqXG9525rABUb160gVsJq2uHg=
 github.com/giantswarm/k8sclient/v5 v5.0.0/go.mod h1:OhlknCs1Wgc0ErjWBgeZDGe4Y6aThus21nQOXPAq4rQ=
 github.com/giantswarm/microendpoint v0.2.0 h1:xCAqAVRjTw/4ifEuBeNavALdbQsLk6+k/ukzdy0GWZE=
@@ -179,14 +181,16 @@ github.com/giantswarm/microerror v0.2.1/go.mod h1:1YtJq/m7Vlq1Y6NP7B+SODOKCGlG7e
 github.com/giantswarm/microerror v0.3.0 h1:V/9cXlIEddNGaRYiA0vYJmgM2+sTQy+k8M7kVjOy4XM=
 github.com/giantswarm/microerror v0.3.0/go.mod h1:g8oCEMFAoEs70riRRmj9+6eiz7SqNxYl+2OfxFh1po0=
 github.com/giantswarm/microkit v0.2.0/go.mod h1:1vDHFUN+ZsUahZJ2hgZxcU7nG35Rj484t8Y5akhdRIM=
-github.com/giantswarm/microkit v0.2.1 h1:Itmkeb9QM+y/11fP4BbUl84nDsUFjSXQFzCUHmINcOs=
-github.com/giantswarm/microkit v0.2.1/go.mod h1:1vDHFUN+ZsUahZJ2hgZxcU7nG35Rj484t8Y5akhdRIM=
+github.com/giantswarm/microkit v0.2.2 h1:BNK55FyS+AXls6mH+81Iloo3z2+FRWqeEz2jYb7ZUhc=
+github.com/giantswarm/microkit v0.2.2/go.mod h1:XCj0vA/+jHiM03XDMlcWuvYdgZQyNS3O7ZVHDOUCYA8=
 github.com/giantswarm/micrologger v0.3.1 h1:HbYbQLobvfsLYzRiGTncaO61CCPd4BlT18xaaday+4o=
 github.com/giantswarm/micrologger v0.3.1/go.mod h1:PjAgtcJ922ZMX/Aa05IPi0bdYvOj2P7pZ7+6dBShMQs=
 github.com/giantswarm/micrologger v0.3.3 h1:RGUOHlpFVvT9vK/BhZGqfzb9AjFxLLBns20oCdlTt8A=
 github.com/giantswarm/micrologger v0.3.3/go.mod h1:fkzQdDBC6HjJq4nllBDt6XB4t4yeVyhdHKblFX6QoMQ=
 github.com/giantswarm/micrologger v0.4.0 h1:2EpnX86HKpqUNY8C4qbB2SzniB4bgES8Cd/mYrVyOrI=
 github.com/giantswarm/micrologger v0.4.0/go.mod h1:xsD5laBXORMy/P34IHZMK0y/D1gTkYtASUL4gUm5KN4=
+github.com/giantswarm/micrologger v0.5.0 h1:/f2knkyf4bZw3L5F48R7VENiEKPb3Sjnzrg46+Ja5vk=
+github.com/giantswarm/micrologger v0.5.0/go.mod h1:J/jbt7A8eixqE40yq4JY8Hdbs/qeboe2FjHlq05UWjA=
 github.com/giantswarm/operatorkit/v4 v4.2.0 h1:/5nVso9Yg599oP1jqYGiMHysjKes/cV//HAM0tCpQos=
 github.com/giantswarm/operatorkit/v4 v4.2.0/go.mod h1:O0F9yfY0qpxOb0oXt2G8Yt4cu3nRQlfwl+wFWdFBb48=
 github.com/giantswarm/to v0.3.0 h1:cEzMYkWLGI3cI8x3a0L3nPCQYJTb/cAaqcIPvxnDmpQ=
@@ -344,8 +348,8 @@ github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1/go.mod h1:wJfORR
 github.com/gorilla/context v1.1.1/go.mod h1:kBGZzfjB9CEq2AlWe17Uuf7NDRt0dE0s8S51q0aT7Yg=
 github.com/gorilla/mux v1.6.2/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
 github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
-github.com/gorilla/mux v1.7.4 h1:VuZ8uybHlWmqV03+zRzdwKL4tUnIp1MAQtp1mIFE1bc=
-github.com/gorilla/mux v1.7.4/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/gorilla/websocket v0.0.0-20170926233335-4201258b820c/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
 github.com/gorilla/websocket v1.4.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
 github.com/gorilla/websocket v1.4.1/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
@@ -784,6 +788,8 @@ golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6/go.mod h1:RxMgew5VJxzue5/jJ
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e h1:vcxGaoTs7kV8m5Np9uUNQin4BrLOthgV7252N8V+FwY=
 golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20201207232520-09787c993a3a h1:DcqTD9SDLc+1P/r1EmRBwnVsrOwW+kk2vWf9n+1sGhs=
+golang.org/x/sync v0.0.0-20201207232520-09787c993a3a/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sys v0.0.0-20170830134202-bb24a47a89ea/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180823144017-11551d06cbcc/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180830151530-49385e6e1522/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
