@@ -3,6 +3,8 @@ module github.com/giantswarm/template-operator
 go 1.16
 
 require (
+	github.com/getsentry/sentry-go v0.10.0 // indirect
+	github.com/giantswarm/apiextensions/v3 v3.22.0 // indirect
 	github.com/giantswarm/exporterkit v0.2.1
 	github.com/giantswarm/k8sclient/v5 v5.11.0
 	github.com/giantswarm/microendpoint v0.2.0
