@@ -1,5 +1,5 @@
 registry:
-  domain: quay.io
+  domain: docker.io
 image:
   name: "giantswarm/template-operator"
   tag: "[[ .Version ]]"
