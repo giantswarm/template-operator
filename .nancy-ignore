@@ -1,14 +1,18 @@
 # Hashicorp consul /api and /sdk are no longer intended for public use and don't have newer tags.
 # Waiting for direct dependencies to move away from them.
-CVE-2022-29153 until=2023-05-25
-CVE-2022-24687 until=2023-05-25
+CVE-2022-29153 until=2022-10-03
+CVE-2022-24687 until=2022-10-03
 
 # pkg:golang/github.com/kataras/iris/v12@v12.1.8
-CVE-2021-23772 until=2022-08-01
+CVE-2021-23772 until=2022-10-03
 
 # pkg:golang/github.com/urfave/negroni@v1.0.0
-sonatype-2021-1485 until=2022-08-01
+sonatype-2021-1485 until=2022-10-03
 
 # pkg:golang/github.com/caddyserver/caddy@v1.0.3
 # Can't be updated without updating GS and K8s dependencies using newer logr version.
-CVE-2022-29718
+CVE-2022-29718 until=2022-10-03
+
+# pkg:golang/github.com/lucas-clemente/quic-go@v0.10.2
+# Upgrading to the current latest of v0.28.0 has the same issue
+CVE-2022-30591 until=2022-10-03
