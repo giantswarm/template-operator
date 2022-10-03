@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@0.10.2
+  architect: giantswarm/architect@4.24.0
 
 workflows:
   build:
@@ -9,6 +9,19 @@ workflows:
       - architect/go-build:
           name: go-build
           binary: template-operator
+          filters:
+            tags:
+              only: /^v.*/
+
+      - architect/push-to-docker:
+          context: "architect"
+          name: push-template-operator-to-docker
+          image: "docker.io/giantswarm/template-operator"
+          username_envar: "DOCKER_USERNAME"
+          password_envar: "DOCKER_PASSWORD"
+          requires:
+            - go-build
+          # Needed to trigger job also on git tag.
           filters:
             tags:
               only: /^v.*/
@@ -47,6 +60,7 @@ workflows:
           app_catalog_test: "control-plane-test-catalog"
           chart: "template-operator"
           requires:
+            - push-template-operator-to-docker
             - push-template-operator-to-quay
           # Needed to trigger job also on git tag.
           filters:

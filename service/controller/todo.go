@@ -1,18 +1,18 @@
 package controller
 
 import (
-	"github.com/giantswarm/k8sclient/v4/pkg/k8sclient"
+	"github.com/giantswarm/k8sclient/v5/pkg/k8sclient"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/micrologger"
-	"github.com/giantswarm/operatorkit/v2/pkg/controller"
-	"github.com/giantswarm/operatorkit/v2/pkg/resource"
-	"github.com/giantswarm/operatorkit/v2/pkg/resource/wrapper/metricsresource"
-	"github.com/giantswarm/operatorkit/v2/pkg/resource/wrapper/retryresource"
+	"github.com/giantswarm/operatorkit/v5/pkg/controller"
+	"github.com/giantswarm/operatorkit/v5/pkg/resource"
+	"github.com/giantswarm/operatorkit/v5/pkg/resource/wrapper/metricsresource"
+	"github.com/giantswarm/operatorkit/v5/pkg/resource/wrapper/retryresource"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 
 	"github.com/giantswarm/template-operator/pkg/project"
-	"github.com/giantswarm/template-operator/service/controller/resource/test"
+	"github.com/giantswarm/template-operator/service/controller/handler/test"
 )
 
 type TODOConfig struct {
@@ -27,7 +27,7 @@ type TODO struct {
 func NewTODO(config TODOConfig) (*TODO, error) {
 	var err error
 
-	resources, err := newTODOResources(config)
+	handlers, err := newTODOHandlers(config)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
@@ -40,7 +40,7 @@ func NewTODO(config TODOConfig) (*TODO, error) {
 			NewRuntimeObjectFunc: func() runtime.Object {
 				return new(corev1.Pod)
 			},
-			Resources: resources,
+			Resources: handlers,
 
 			// Name is used to compute finalizer names. This here results in something
 			// like operatorkit.giantswarm.io/template-operator-todo-controller.
@@ -60,7 +60,7 @@ func NewTODO(config TODOConfig) (*TODO, error) {
 	return c, nil
 }
 
-func newTODOResources(config TODOConfig) ([]resource.Interface, error) {
+func newTODOHandlers(config TODOConfig) ([]resource.Interface, error) {
 	var err error
 
 	var testResource resource.Interface
@@ -76,7 +76,7 @@ func newTODOResources(config TODOConfig) ([]resource.Interface, error) {
 		}
 	}
 
-	resources := []resource.Interface{
+	handlers := []resource.Interface{
 		testResource,
 	}
 
@@ -85,7 +85,7 @@ func newTODOResources(config TODOConfig) ([]resource.Interface, error) {
 			Logger: config.Logger,
 		}
 
-		resources, err = retryresource.Wrap(resources, c)
+		handlers, err = retryresource.Wrap(handlers, c)
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
@@ -94,11 +94,11 @@ func newTODOResources(config TODOConfig) ([]resource.Interface, error) {
 	{
 		c := metricsresource.WrapConfig{}
 
-		resources, err = metricsresource.Wrap(resources, c)
+		handlers, err = metricsresource.Wrap(handlers, c)
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
 	}
 
-	return resources, nil
+	return handlers, nil
 }
