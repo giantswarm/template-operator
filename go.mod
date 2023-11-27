@@ -12,9 +12,9 @@ require (
 	github.com/giantswarm/operatorkit/v5 v5.0.0
 	github.com/prometheus/client_golang v1.12.2
 	github.com/spf13/viper v1.7.1
-	k8s.io/api v0.18.9
+	k8s.io/api v0.18.14
 	k8s.io/apimachinery v0.18.18
-	k8s.io/client-go v0.18.9
+	k8s.io/client-go v0.18.14
 )
 
 require (
